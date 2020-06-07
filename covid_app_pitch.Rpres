@@ -1,0 +1,57 @@
+COVID-19 Dashboard
+========================================================
+author: Fahmi Adi Nugraha
+date: 06/07/2020
+autosize: true
+
+Overview
+========================================================
+
+Our product allows the user to keep track of the number of COVID-19 cases
+throughout Indonesia. It contains two charts:
+
+- A line graph detailing the total number of cases at different granularities
+- A histogram showing the total number of cases at in a number of provinces
+
+Each chart displays three types of cases:
+
+- Confirmed cases
+- Recoveries
+- Deaths
+
+Data
+========================================================
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE, echo = FALSE}
+# Load libs
+library(tidyverse)
+library(knitr)
+
+# Load and province display data
+url <- 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRzcBfpP9-wRY5tHDW1KOwvRXDKPwCvnZXds1wP9vfyWO6AOHFccID6Xya-2H_0U6Q-Cy-IguHMHhzT/pub?gid=1857994474&single=true&output=csv'
+covid_id_province <- read_csv(url)
+
+covid_id_province %>%
+    select(Province_name, ends_with('cases')) %>%
+    head(10) %>% kable()
+```
+
+The data is taken from the Humanitarian Data Exchange and can be found
+[here.][1] Displayed above are the first ten rows of the total number of cases
+per province.
+
+[1]: https://data.humdata.org/dataset/indonesia-covid-19-cases-recoveries-and-deaths-per-province
+
+Usage - Daily, Weekly and Monthly Totals
+========================================================
+
+```{r dwm plot, fig.align = 'center', out.width = '70%', echo = FALSE}
+include_graphics('images/dwm_line_graph.png')
+```
+
+Usage - Totals per Province
+========================================================
+
+```{r prov hist, fig.align = 'center', out.width = '70%', echo = FALSE}
+include_graphics('images/prov_hist.png')
+```
